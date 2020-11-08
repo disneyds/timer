@@ -53,16 +53,52 @@ class CountdownTimer {
 
 
 
-const timer1 = new CountdownTimer({
-  selector: '#timer-1',
-  targetDate: new Date('11 15, 2020'),
-});
 
 
-timer1.start();
+
+
 
 
 const year = document.querySelector('#year');
 const month = document.querySelector('#month');
 const day = document.querySelector('#day');
 console.log(year.value, month.value, day.value,);
+
+
+
+year.addEventListener('change', onSelect);
+month.addEventListener('change', onSelect);
+day.addEventListener('change', onSelect);
+
+let selectedYear = year.value;
+let selectedMonth = month.value;
+let selectedDay = day.value;
+
+function onSelect() {
+
+    selectedYear = year.value;
+    selectedMonth = month.value;
+    selectedDay = day.value;
+    timer1.isActive = false;
+ };
+
+
+const btnStart = document.querySelector('#btnStart');
+btnStart.addEventListener('click', onStart);
+
+const btnStop = document.querySelector('#btnStop');
+btnStop.addEventListener('click', onStop);
+
+function onStart() {
+    const timer1 = new CountdownTimer({
+        selector: '#timer-1',
+        targetDate: new Date(`${selectedMonth} ${selectedDay}, ${selectedYear}`),
+    });
+    timer1.start();
+    return timer1;
+}
+
+function onStop() {
+    
+    timer1.stop();
+}

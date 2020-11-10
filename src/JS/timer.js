@@ -13,6 +13,7 @@ class CountdownTimer {
     }
 
     start() {
+        this.targetDate = new Date(`${selectedMonth} ${selectedDay}, ${selectedYear}`)
         if (this.isActive) { return; }
         this.isActive = true;
         this.intervalId = setInterval(() => {
@@ -80,6 +81,7 @@ function onSelect() {
     selectedMonth = month.value;
     selectedDay = day.value;
     timer1.isActive = false;
+    clearInterval(timer1.intervalId);
  };
 
 
@@ -90,15 +92,17 @@ const btnStop = document.querySelector('#btnStop');
 btnStop.addEventListener('click', onStop);
 
 function onStart() {
-    const timer1 = new CountdownTimer({
-        selector: '#timer-1',
-        targetDate: new Date(`${selectedMonth} ${selectedDay}, ${selectedYear}`),
-    });
+    
     timer1.start();
-    return timer1;
+
 }
 
 function onStop() {
     
     timer1.stop();
+    clearInterval(timer1.intervalId);
 }
+
+const timer1 = new CountdownTimer({
+    selector: '#timer-1',
+});
